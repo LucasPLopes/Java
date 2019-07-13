@@ -24,5 +24,29 @@ public class Produto
         return "Produto [fabricante=" + fabricante + ", id=" + id + ", nome=" + nome + ", price=" + price
                 + ", quantidade=" + quantidade + "]";
     }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getFabricante() {
+        return fabricante;
+    }
+
+    public void setFabricante(String fabricante) {
+        this.fabricante = fabricante;
+    }
     
 }
