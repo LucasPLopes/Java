@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<products>
+    <product>
+        <id>01</id>
+        <name>name 01</name>
+        <price currency="usd">20</price>
+        <quantity>5</quantity>
+        <weight unit="kg">2.1</weight>
+        <date format="dd/MM/yyyy">02/03/2007</date>
+        <status>true</status>
+    </product>
+    <product>
+		<id>p02</id>
+		<name>name 2</name>
+		<price currency="eur">12</price>
+		<quantity>3</quantity>
+		<weight unit="kg">6.5</weight>
+		<date format="dd/MM/yyyy">24/11/2018</date>
+		<status>true</status>
+	</product>
+	<product>
+		<id>p03</id>
+		<name>name 3</name>
+		<price currency="aud">13</price>
+		<quantity>1</quantity>
+		<weight unit="kg">7.8</weight>
+		<date format="dd/MM/yyyy">14/10/2018</date>
+		<status>false</status>
+	</product>
+</products>
