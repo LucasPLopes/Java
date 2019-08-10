@@ -2,8 +2,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 
-public class Singleton{
-    private static Singleton firstInstance  = null;
+public class Singleton2{
+    private static Singleton2 firstInstance  = null;
 
     String[] scrabbleLetters = 
             {"a", "a", "a", "a", "a", "a", "a", "a", "a",
@@ -18,9 +18,11 @@ public class Singleton{
     private LinkedList<String> letterList = new LinkedList<String>(Arrays.asList(scrabbleLetters));
     static boolean firstThread = true;
 
-    private Singleton(){}
+    private Singleton2(){}
     
-    public Singleton getInstance(){
+    // public static Singleton2 getInstance(){
+    //única instacia para todas as threads
+    public static synchronized Singleton2 getInstance(){
         if( firstInstance == null)
             {
                 if(firstThread){
@@ -32,13 +34,23 @@ public class Singleton{
                         System.out.println(e.getMessage());
                     }
                 }
-                firstInstance = new Singleton();
+                // firstInstance = new Singleton2(); ou
+                synchronized(Singleton2.class){
+                    if(firstInstance == null)
+                        {
+                            firstInstance = new Singleton2();
+                            Collections.shuffle(firstInstance.letterList);
+                        }
+                }
+
             }
         return firstInstance;
     }
+
     public LinkedList<String> getLetterList(){
-        return letterList;
+        return firstInstance.letterList;
     }
+
     public LinkedList<String> getTiles(int howManyTiles){
         LinkedList<String>  tiles = new LinkedList<String>();
         
