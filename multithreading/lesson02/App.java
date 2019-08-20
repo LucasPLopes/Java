@@ -1,9 +1,10 @@
 import java.util.Scanner;
 
 class Processor extends Thread {
+    //the keyword volatile is  used to prevent thread cached variables
     //there is no way that variable running be ignored by thread
     private volatile boolean running = true;
-    public void run(){
+    public void run(){g
         while (running) {
             System.out.println("Hello");
             try {
