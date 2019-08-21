@@ -36,8 +36,14 @@ public class Worker{
         
         long start = System.currentTimeMillis();
         
-        process();
+        new Thread( new Runnable(){
         
+            @Override
+            public void run() {
+                    process();     
+            }
+        }).start();
+
         long end  = System.currentTimeMillis();
 
         System.out.println("Time take: "+(end - start));
