@@ -15,7 +15,6 @@ public class App {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
             }
         });
 
@@ -25,7 +24,6 @@ public class App {
             public void run() {
                 try {
                     consumer();
-
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
