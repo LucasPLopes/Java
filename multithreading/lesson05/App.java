@@ -24,16 +24,16 @@ class Processor implements Runnable {
 
 public class App {
     public static void main(String[] args) {
-        ExecutorService executorService = Executors.newFixedThreadPool(2);
+        ExecutorService executor = Executors.newFixedThreadPool(2);
 
         for (int i = 1; i < 6; i++) {
-            executorService.submit(new Processor(i));
+            executor.submit(new Processor(i));
         }
         
         System.out.println("All tasks submitted.");
-        executorService.shutdown();
+        executor.shutdown();
         try {
-            executorService.awaitTermination(5, TimeUnit.SECONDS);
+            executor.awaitTermination(1, TimeUnit.MINUTES);
         } catch (Exception e) {
             e.printStackTrace();
         }
