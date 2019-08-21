@@ -3,11 +3,11 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 public class App {
-    private static  BlockingQueue<Integer> blockingQueue = new ArrayBlockingQueue<Integer>(10);
+    private static BlockingQueue<Integer> queue = new ArrayBlockingQueue<Integer>(10);
 
     public static void main(String[] args) throws InterruptedException {
-        Thread t1 = new Thread(new Runnable(){
-        
+        Thread t1 = new Thread(new Runnable() {
+
             @Override
             public void run() {
                 try {
@@ -19,13 +19,13 @@ public class App {
             }
         });
 
-        Thread t2 = new Thread(new Runnable(){
-        
+        Thread t2 = new Thread(new Runnable() {
+
             @Override
             public void run() {
                 try {
                     consumer();
-                    
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -37,25 +37,30 @@ public class App {
 
         t1.join();
         t2.join();
-        
+
     }
 
     private static void producer() throws InterruptedException {
         Random random = new Random();
         while (true) {
-            blockingQueue.put(random.nextInt(100));
+            Thread.sleep(100);
+            queue.put(random.nextInt(100));
         }
     }
 
-    private static  void consumer() throws InterruptedException {
+    private static void consumer() throws InterruptedException {
         Random random = new Random();
-
+        int number;
         while (true) {
-            Thread.sleep(100);
-
-            if (random.nextInt(5) == 0) {
-                Integer value = blockingQueue.take();
-                System.out.println("Taken value : " + value + "; Queue size is:" + blockingQueue.size());
+            Thread.sleep(75);
+            number = random.nextInt(2);
+            if (number == 0 && !queue.isEmpty()) {
+                Integer value = queue.take();
+                System.out.println("Taken value : " + value + "; Queue size is:" + queue.size());
+            } else if (queue.isEmpty()) {
+                System.out.println("Queue is empty!.");
+            } else {
+                System.out.println("Number: " + number);
             }
         }
     }
