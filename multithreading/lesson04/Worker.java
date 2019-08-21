@@ -36,13 +36,31 @@ public class Worker{
         
         long start = System.currentTimeMillis();
         
-        new Thread( new Runnable(){
+       Thread t1 =  new Thread( new Runnable(){
         
             @Override
             public void run() {
                     process();     
             }
-        }).start();
+        });
+        Thread t2 =  new Thread( new Runnable(){
+        
+            @Override
+            public void run() {
+                    process();     
+            }
+        });
+
+        t1.start();
+        t2.start();
+
+        try{
+            t1.join();
+            t2.join();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
 
         long end  = System.currentTimeMillis();
 
