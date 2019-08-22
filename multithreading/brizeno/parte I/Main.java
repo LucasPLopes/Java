@@ -1,3 +1,4 @@
+// fonte: https://brizeno.wordpress.com/2011/09/23/praticando-concorrencia-em-java/
 public class Main{
     public static void main(String[] args) {
         Buffer  bufferCompartilhado = new Buffer();
