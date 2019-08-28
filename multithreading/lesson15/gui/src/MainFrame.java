@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.SwingWorker;
 
 public class MainFrame extends javax.swing.JFrame {
 
@@ -52,6 +53,17 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void start() {
-        System.out.println("MainFrame.start()");
+        SwingWorker<Boolean, Void> worker = new SwingWorker<Boolean, Void>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                for (int i = 0; i < 30; i++) {
+                    Thread.sleep(100);
+                    count1.setText("Hello "+ i);
+                    System.out.println("Hello "+ i);
+                }
+                return null;
+            }
+        };
+        worker.execute();
     }
 }
