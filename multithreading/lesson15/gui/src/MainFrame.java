@@ -3,6 +3,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingWorker;
@@ -10,7 +11,7 @@ import javax.swing.SwingWorker;
 public class MainFrame extends javax.swing.JFrame {
 
     private JLabel count1 = new JLabel("0");
-    private JButton statusLabel = new JButton("Task not completed");
+    private JLabel statusLabel = new JLabel("Task not completed");
     private JButton startBtn = new JButton("Start");
 
     public MainFrame() {
@@ -46,7 +47,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        setSize(200, 400);
+        setSize(500, 150);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
 
@@ -55,14 +56,30 @@ public class MainFrame extends javax.swing.JFrame {
     private void start() {
         SwingWorker<Boolean, Void> worker = new SwingWorker<Boolean, Void>() {
             @Override
-            protected Void doInBackground() throws Exception {
+            protected Boolean doInBackground() throws Exception {
                 for (int i = 0; i < 30; i++) {
                     Thread.sleep(100);
-                    count1.setText("Hello "+ i);
-                    System.out.println("Hello "+ i);
+                    count1.setText("Hello " + i);
+                    System.out.println("Hello " + i);
                 }
-                return null;
+                return true;
             }
+
+            @Override
+            protected void done() {
+                try {
+                    Boolean status = get();
+                    statusLabel.setText("Completed with status: " + status);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected void process(List<Void> chunks) {
+                super.process(chunks); //To change body of generated methods, choose Tools | Templates.
+            }
+
         };
         worker.execute();
     }
