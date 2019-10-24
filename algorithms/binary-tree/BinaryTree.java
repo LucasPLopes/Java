@@ -50,6 +50,22 @@ public class BinaryTree {
             System.out.println(focus);
         }
     }
+
+    public Node findNode(int key ){
+        Node focus = root;
+        while(focus.getKey() == key ){
+            if(key < focus.getKey()){
+                focus = focus.left;
+            }else{
+                focus = focus.right;
+            }
+        }
+        if(focus == null)
+            return null;
+        if(key == focus.getKey())
+            return focus; 
+        return focus;// return root
+    }
     public static void main(String[] args) {
         BinaryTree bt = new BinaryTree();
         bt.addNode(50, new User("A"));
@@ -57,15 +73,16 @@ public class BinaryTree {
         bt.addNode(15, new User("C"));
         bt.addNode(30, new User("D"));
         bt.addNode(75, new User("E"));
-        System.out.println("In Order:");
-        bt.inOrder(bt.root);
-        System.out.println("Pre Order:");
-        bt.preOrder(bt.root);
-        System.out.println("Post Order:");
-        bt.postOrder(bt.root);
-    }
-
-    
+        // System.out.println("In Order:");
+        // bt.inOrder(bt.root);
+        // System.out.println("Pre Order:");
+        // bt.preOrder(bt.root);
+        // System.out.println("Post Order:");
+        // bt.postOrder(bt.root);
+        System.out.println("Search for 30");
+        System.out.println(bt.findNode(30));
+    }   
+        
     private class Node {
         private User user;
         private int key;
@@ -84,11 +101,6 @@ public class BinaryTree {
         public int getKey() {
             return key;
         }
-
-        public void setKey(int key) {
-            this.key = key;
-        }
-
     }
 
 }
