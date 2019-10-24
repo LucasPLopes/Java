@@ -27,17 +27,6 @@ public class BinaryTree {
             }
         }
     }
-
-    public static void main(String[] args) {
-        BinaryTree bt = new BinaryTree();
-        bt.addNode(50, new User("A"));
-        bt.addNode(25, new User("B"));
-        bt.addNode(15, new User("C"));
-        bt.addNode(30, new User("D"));
-        bt.addNode(75, new User("E"));
-        bt.inOrder(bt.root);
-    }
-
     public void inOrder(Node focus) {
         if (focus != null) {
             inOrder(focus.left);
@@ -46,6 +35,37 @@ public class BinaryTree {
         }
     }
 
+    public void preOrder(Node focus) {
+        if (focus != null) {
+            System.out.println(focus);
+            inOrder(focus.left);            
+            inOrder(focus.right);
+        }
+    }
+    public void postOrder(Node focus) {
+        if (focus != null) {
+            System.out.println(focus);
+            inOrder(focus.left);            
+            inOrder(focus.right);
+            System.out.println(focus);
+        }
+    }
+    public static void main(String[] args) {
+        BinaryTree bt = new BinaryTree();
+        bt.addNode(50, new User("A"));
+        bt.addNode(25, new User("B"));
+        bt.addNode(15, new User("C"));
+        bt.addNode(30, new User("D"));
+        bt.addNode(75, new User("E"));
+        System.out.println("In Order:");
+        bt.inOrder(bt.root);
+        System.out.println("Pre Order:");
+        bt.preOrder(bt.root);
+        System.out.println("Post Order:");
+        bt.postOrder(bt.root);
+    }
+
+    
     private class Node {
         private User user;
         private int key;
