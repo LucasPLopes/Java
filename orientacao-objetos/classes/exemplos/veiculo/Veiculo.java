@@ -1,3 +1,5 @@
+package veiculo;
+
 public class Veiculo
 {
     private Info informacao;

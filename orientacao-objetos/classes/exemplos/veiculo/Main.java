@@ -1,3 +1,5 @@
+package veiculo;
+
 public class Main{
     public static void main(String[] args) {
         Info informacao = new Info("Nightly runner", "Tesla", 2022);

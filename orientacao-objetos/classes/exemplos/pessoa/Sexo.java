@@ -1,3 +1,4 @@
+package pessoa;
 public enum Sexo {
 
     MASCULINO('M'), FEMININO('F');

@@ -1,3 +1,4 @@
+package veiculo;
 public class Info{
     private String modelo;
     private String fabricante;
