@@ -1,3 +1,5 @@
+package veiculo;
+
 public enum Motor {
 
     C10("1.0"), //

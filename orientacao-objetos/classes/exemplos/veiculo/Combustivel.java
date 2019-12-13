@@ -1,3 +1,5 @@
+package veiculo;
+
 public enum Combustivel {
     
     ALCOOL(0),
