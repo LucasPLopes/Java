@@ -1,6 +1,5 @@
 package controller;
 
-public interface Payment{
-    public void pay(int amount);
-
+public interface Payment {
+  public void pay(int amount);
 }
