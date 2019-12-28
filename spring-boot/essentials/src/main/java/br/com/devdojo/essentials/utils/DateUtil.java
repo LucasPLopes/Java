@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Component;
 
 
-@EnableAutoConfiguration
+// @EnableAutoConfiguration // não é necessário
 @Component
 public class DateUtil {
     public String formatLocalDateToDatabaseStyle(final LocalDateTime ldt) {
