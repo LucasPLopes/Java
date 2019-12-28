@@ -23,7 +23,7 @@ public class StudentEndPoint {
     @RequestMapping(method = RequestMethod.GET, path = "/list")
     public List<Student> listAll() {
         System.out.println("/student/list acesso: " + dateUtil.formatLocalDateToDatabaseStyle(LocalDateTime.now()));
-        return asList(new Student("Lucas"), new Student("Ana"));
+        return Student.studentList;
     }
 
 }
