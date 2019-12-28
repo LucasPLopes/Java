@@ -1,0 +1,17 @@
+package com.eduonix.eduonixbackend.controller;
+
+import java.util.Calendar;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class ApiController {
+
+    @RequestMapping(value = "/api/getDate", method = RequestMethod.GET)
+    public String getDate() {
+        return Calendar.getInstance().getTime().toString();
+    }
+
+}
