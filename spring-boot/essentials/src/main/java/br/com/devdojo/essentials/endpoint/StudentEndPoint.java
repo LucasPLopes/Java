@@ -1,13 +1,13 @@
 package br.com.devdojo.essentials.endpoint;
 
-import java.util.List;
-
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.devdojo.essentials.error.CustomTypeError;
 import br.com.devdojo.essentials.model.Student;
 import br.com.devdojo.essentials.utils.DateUtil;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
@@ -43,8 +42,14 @@ public class StudentEndPoint {
         {
             return new ResponseEntity<>(new CustomTypeError("Student not found"), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(Student.studentList.get(index),HttpStatus.OK );
-
+        return new ResponseEntity<>(Student.studentList.get(index),HttpStatus.OK );    
     }
+    @RequestMapping(method=RequestMethod.POST)
+        public ResponseEntity<?> save(@RequestBody Student student){
+            Student.studentList.add(student);
+            return new ResponseEntity<>(student,HttpStatus.OK);
+        }
+
+
     
 }
