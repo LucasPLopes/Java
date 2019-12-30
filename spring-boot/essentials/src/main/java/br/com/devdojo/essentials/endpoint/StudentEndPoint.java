@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.devdojo.essentials.error.CustomTypeError;
 import br.com.devdojo.essentials.model.Student;
 import br.com.devdojo.essentials.utils.DateUtil;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -50,6 +52,11 @@ public class StudentEndPoint {
             return new ResponseEntity<>(student,HttpStatus.OK);
         }
 
-
+    @RequestMapping(method=RequestMethod.DELETE)
+    public ResponseEntity<?> delete(@RequestBody Student student) {
+        Student.studentList.remove(student);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    
     
 }
