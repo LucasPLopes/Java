@@ -57,6 +57,14 @@ public class StudentEndPoint {
         Student.studentList.remove(student);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @RequestMapping(method=RequestMethod.PUT)
+    public ResponseEntity<?> update(@RequestBody Student student){
+        Student.studentList.remove(student);
+        Student.studentList.add(student);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
     
     
 }
