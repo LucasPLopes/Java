@@ -5,7 +5,11 @@ import javax.persistence.Entity;
 @Entity
 public class Student extends AbstractEntity{
     private String name;
-
+    public Student(){}
+    public Student(String name){
+        super();
+        this.name = name;
+    }
     public String getName() {
         return name;
     }

@@ -39,9 +39,9 @@ public class StudentEndPoint {
     public ResponseEntity<?> getStudentById(@PathVariable("id") Long id) {
         Optional<Student> student = studentDAO.findById(id);
         if (student.isPresent()) {
-            return new ResponseEntity<>(new CustomTypeError("Student not found"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(student.get(), HttpStatus.OK);
         }
-        return new ResponseEntity<>(student.get(), HttpStatus.OK);
+        return new ResponseEntity<>(new CustomTypeError("Student not found"), HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
@@ -49,7 +49,7 @@ public class StudentEndPoint {
         return new ResponseEntity<>(studentDAO.save(student), HttpStatus.OK);
     }
 
-    @DeleteMapping(path="/{id}")
+    @DeleteMapping(path = "/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         studentDAO.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
