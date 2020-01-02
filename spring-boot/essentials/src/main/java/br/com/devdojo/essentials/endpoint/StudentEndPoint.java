@@ -1,7 +1,5 @@
 package br.com.devdojo.essentials.endpoint;
 
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.devdojo.essentials.error.CustomTypeError;
+import br.com.devdojo.essentials.error.Mensagem;
+import br.com.devdojo.essentials.error.ResourceNotFoundException;
 import br.com.devdojo.essentials.model.Student;
 import br.com.devdojo.essentials.repository.StudentRepository;
 
@@ -37,16 +36,17 @@ public class StudentEndPoint {
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<?> getStudentById(@PathVariable("id") Long id) {
+        verifyIfStudentExists(id);
         Optional<Student> student = studentDAO.findById(id);
-        if (student.isPresent()) {
-            return new ResponseEntity<>(student.get(), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(new CustomTypeError("Student not found"), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(student.get(), HttpStatus.OK);
+            
     }
-    @GetMapping(path= "/findByName/{name}")
-    public ResponseEntity<?> findStudentByName(@PathVariable String name ){
+
+    @GetMapping(path = "/findByName/{name}")
+    public ResponseEntity<?> findStudentByName(@PathVariable String name) {
         return new ResponseEntity<>(studentDAO.findByNameIgnoreCaseContaining(name), HttpStatus.OK);
     }
+
     @PostMapping
     public ResponseEntity<?> save(@RequestBody Student student) {
         return new ResponseEntity<>(studentDAO.save(student), HttpStatus.CREATED);
@@ -54,15 +54,22 @@ public class StudentEndPoint {
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
+        verifyIfStudentExists(id);
         studentDAO.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody Student student) {
+        verifyIfStudentExists(student.getId());
         studentDAO.save(student);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    private void verifyIfStudentExists(Long id){
+        Optional<Student> student = studentDAO.findById(id);
+        if(!student.isPresent())
+        throw new ResourceNotFoundException(Mensagem.STUDENT_NOT_FOUND_FOR_ID.getMensagem() + id);
+    }
 
 }
