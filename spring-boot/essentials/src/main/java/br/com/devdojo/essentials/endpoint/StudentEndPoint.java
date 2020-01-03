@@ -39,7 +39,7 @@ public class StudentEndPoint {
         verifyIfStudentExists(id);
         Optional<Student> student = studentDAO.findById(id);
         return new ResponseEntity<>(student.get(), HttpStatus.OK);
-            
+
     }
 
     @GetMapping(path = "/findByName/{name}")
@@ -65,11 +65,11 @@ public class StudentEndPoint {
         studentDAO.save(student);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-    private void verifyIfStudentExists(Long id){
+    private void verifyIfStudentExists(Long id) {
         Optional<Student> student = studentDAO.findById(id);
-        if(!student.isPresent())
-        throw new ResourceNotFoundException(Mensagem.STUDENT_NOT_FOUND_FOR_ID.getMensagem() + id);
+        if (!student.isPresent())
+            throw new ResourceNotFoundException(
+                    Mensagem.STUDENT_NOT_FOUND_FOR_ID.getMensagem() + id);
     }
-
+    
 }
