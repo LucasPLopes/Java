@@ -1,21 +1,24 @@
 package br.com.devdojo.essentials.handler;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import br.com.devdojo.essentials.error.ResourceNotFoundDetails;
-import br.com.devdojo.essentials.error.ResourceNotFoundException;
-import br.com.devdojo.essentials.error.ValidationErrorDetail;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
-
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import br.com.devdojo.essentials.error.ErrorDetail;
+import br.com.devdojo.essentials.error.ResourceNotFoundDetails;
+import br.com.devdojo.essentials.error.ResourceNotFoundException;
+import br.com.devdojo.essentials.error.ValidationErrorDetail;
 
 @ControllerAdvice
-public class RestExceptionHandler{
+public class RestExceptionHandler extends ResponseEntityExceptionHandler{
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<?> handleResourceNotFoundException(ResourceNotFoundException rnf){
         ResourceNotFoundDetails rnfDetails =  ResourceNotFoundDetails.Builder.newBuilder()
@@ -29,9 +32,8 @@ public class RestExceptionHandler{
             return new ResponseEntity<>(rnfDetails,HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> handleValidationErrorException(
-        MethodArgumentNotValidException manve    )
+    @Override
+    public ResponseEntity<Object> handleMethodArgumentNotValid(org.springframework.web.bind.MethodArgumentNotValidException manve, org.springframework.http.HttpHeaders headers, org.springframework.http.HttpStatus status, org.springframework.web.context.request.WebRequest request)
     {
 
         List<FieldError> fieldErrors =manve.getBindingResult().getFieldErrors();
@@ -50,5 +52,18 @@ public class RestExceptionHandler{
 
             return new ResponseEntity<>(rnfDetails,HttpStatus.BAD_REQUEST);
     }
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(
+			HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
+                ErrorDetail rnfDetails =  ErrorDetail.Builder.newBuilder()
+                .timestamp(new Date().getTime())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .title("Http Message error")
+                .detail("Http message not readable")
+                .developerMessage(ex.getClass().getName())
+                .build();
+    
+                return new ResponseEntity<>(rnfDetails,HttpStatus.BAD_REQUEST);
+	}
 }
