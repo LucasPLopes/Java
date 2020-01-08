@@ -2,6 +2,7 @@ package br.com.devdojo.essentials.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import org.hibernate.annotations.*;
 
 @MappedSuperclass
 public class AbstractEntity implements Serializable {
@@ -10,7 +11,9 @@ public class AbstractEntity implements Serializable {
      */
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator="increment")
+    @GenericGenerator(name="id", strategy = "increment")
+
     private Long id;
 
     public void setId(Long id) {

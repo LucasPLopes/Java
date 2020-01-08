@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Pageable;
 import br.com.devdojo.essentials.error.Mensagem;
 import br.com.devdojo.essentials.error.ResourceNotFoundException;
 import br.com.devdojo.essentials.model.Student;
 import br.com.devdojo.essentials.repository.StudentRepository;
+
 
 @RestController
 @RequestMapping("student")
@@ -30,8 +32,8 @@ public class StudentEndPoint {
     }
 
     @GetMapping
-    public ResponseEntity<?> listAll() {
-        return new ResponseEntity<>(studentDAO.findAll(), HttpStatus.OK);
+    public ResponseEntity<?> listAll(Pageable pageable) {
+        return new ResponseEntity<>(studentDAO.findAll(pageable), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{id}")
