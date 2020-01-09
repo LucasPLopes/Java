@@ -1,31 +1,23 @@
 package model;
 
 public class Product {
-    private String upcCode;
-    private int price;
+  private String code;
+  private int price;
 
-    public Product() {
-    }
+  public Product() {
+    code = "";
+    price = 0;
+  }
 
-    public Product(String upcCode, int price) {
-        this.upcCode = upcCode;
-        this.price = price;
-    }
+  public Product(String code, int price) {
 
-    public String getUpcCode() {
-        return upcCode;
-    }
+    this.code = code;
+    this.price = price;
+  }
 
-    public void setUpcCode(String upcCode) {
-        this.upcCode = upcCode;
-    }
+  public int getPrice() {
+    return price;
+  }
 
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
 
 }

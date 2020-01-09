@@ -6,38 +6,36 @@ import java.util.List;
 import model.Product;
 
 public class ShoppingCart {
-   private  List<Product> productList;
+  private List<Product> products;
 
-    public ShoppingCart() {
-        setProductList(new ArrayList<>());
-    }
+  public ShoppingCart() {
+    setProductList(new ArrayList<>());
+  }
 
-    public void addProduct(Product product){
-        productList.add(product);
-    }
-    public void removeProduct(Product product){
-        productList.remove(product);
-    }
-    public int calculateTotal(){
-        int sum = 0;
-        for(Product p: productList)
-            {
-                sum += p.getPrice();
-            }
-        return sum;
-    }
+  public void add(Product product) {
+    products.add(product);
+  }
 
-    public void pay(Payment paymentStatement){
-        int amount  = calculateTotal();
-        paymentStatement.pay(amount);
-    }
-    public List<Product> getProductList() {
-        return productList;
-    }
+  public void remove(Product product) {
+    products.remove(product);
+  }
 
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
-    }
+  public int cost() {
+    return products.stream().mapToInt(p -> p.getPrice()).sum();
+  }
 
-     
+  public void pay(Payment paymentStatement) {
+    Integer amount = cost();
+    paymentStatement.pay(amount);
+  }
+
+  public List<Product> getProductList() {
+    return products;
+  }
+
+  public void setProductList(List<Product> productList) {
+    this.products = productList;
+  }
+
+
 }
