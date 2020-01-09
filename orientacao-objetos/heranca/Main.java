@@ -17,9 +17,13 @@ public class Main {
         
         
 
-        System.out.println(meuEclipse.correr());
-        System.out.println(meuEclipse.turbo());
-        System.out.println(meuJeep.correr());
+
+        VeiculoRepository.add(meuEclipse);
+        VeiculoRepository.add(meuJeep);
+
+        System.out.println(VeiculoRepository.get(0).correr());
+        System.out.println(((Carro) VeiculoRepository.get(0)).turbo());
+        System.out.println(VeiculoRepository.get(1).correr());
         // System.out.println(meuJeep.turbo());
 
 
