@@ -4,8 +4,8 @@ public class Carro extends Veiculo {
 
     @Override
     public String correr() {
-        return String.format("%s do fabrincante %s está correndo a %d km/h",
-                             modelo, fabricante, velocidade);
+        return String.format("id: %d,%s do fabrincante %s está correndo a %d km/h",
+                             id,modelo, fabricante, velocidade);
 
     }
     public String turbo(){
