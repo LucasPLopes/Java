@@ -1,40 +1,31 @@
 package br.com.devdojo.essentials.config;
 
-import org.springframework.context.annotation.Bean;
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-// @Configuration
-@EnableWebSecurity
+@Configuration
+// @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/").permitAll().anyRequest().authenticated().and()
-                .httpBasic().and().csrf().disable();
+        http.authorizeRequests().anyRequest().authenticated().and().httpBasic().and()
+                .sessionManagement().sessionCreationPolicy(STATELESS);
     }
 
-    @Bean
     @Override
-    protected UserDetailsService userDetailsService() {
-        
-        UserDetails user  =User.withDefaultPasswordEncoder().username("lucas").password("password").
-        roles("USER").build();
-        
-        return new InMemoryUserDetailsManager(user);
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+
+        auth.inMemoryAuthentication().withUser("lucas").password(encoder.encode("password"))
+                .roles("USER").and().withUser("admin").password("password").roles("USER", "ADMIN");
+
     }
-
-
-    
-
-
-  
-
-
 
 }
