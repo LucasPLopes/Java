@@ -3,8 +3,10 @@ package br.com.devdojo.essentials.endpoint;
 import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,7 @@ import br.com.devdojo.essentials.error.ResourceNotFoundException;
 import br.com.devdojo.essentials.model.Student;
 import br.com.devdojo.essentials.repository.StudentRepository;
 
+
 @RestController
 @RequestMapping("student")
 public class StudentEndPoint {
@@ -30,8 +33,8 @@ public class StudentEndPoint {
     }
 
     @GetMapping
-    public ResponseEntity<?> listAll() {
-        return new ResponseEntity<>(studentDAO.findAll(), HttpStatus.OK);
+    public ResponseEntity<?> listAll(Pageable pageable) {
+        return new ResponseEntity<>(studentDAO.findAll(pageable), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{id}")
@@ -53,7 +56,9 @@ public class StudentEndPoint {
         return new ResponseEntity<>(studentDAO.save(student), HttpStatus.CREATED);
     }
 
+
     @DeleteMapping(path = "/{id}")
+    @PreAuthorize("hasRoles('USER')")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         verifyIfStudentExists(id);
         studentDAO.deleteById(id);
