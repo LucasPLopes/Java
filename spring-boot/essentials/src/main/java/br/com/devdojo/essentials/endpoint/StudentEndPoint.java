@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import br.com.devdojo.essentials.error.Mensagem;
 import br.com.devdojo.essentials.error.ResourceNotFoundException;
 import br.com.devdojo.essentials.model.Student;
@@ -61,6 +60,7 @@ public class StudentEndPoint {
     public ResponseEntity<?> save(@Valid@RequestBody Student student) {
         return new ResponseEntity<>(studentDAO.save(student), HttpStatus.CREATED);
     }
+
 
     @DeleteMapping(path = "/{id}")
     @PreAuthorize("hasRole('ADMIN')")

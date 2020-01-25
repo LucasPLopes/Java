@@ -6,9 +6,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-
-
+import static  br.com.devdojo.essentials.utils.PasswordEncoder.encode;
 
 @Entity
 public class User extends AbstractEntity{
@@ -19,9 +17,9 @@ public class User extends AbstractEntity{
     @NotEmpty
     @JsonIgnore
     private String password;
-    @NotEmpty
+    @Column
     private String name;
-    @NotEmpty
+    @Column
     private boolean admin;
 
     public String getUsername() {
@@ -37,7 +35,7 @@ public class User extends AbstractEntity{
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = encode(password);
     }
 
     public String getName() {
@@ -55,6 +53,6 @@ public class User extends AbstractEntity{
     public void setAdmin(boolean admin) {
         this.admin = admin;
     }
-    
+
 
 }

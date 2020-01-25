@@ -1,6 +1,6 @@
 package br.com.devdojo.essentials.config;
 
-import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+// import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
